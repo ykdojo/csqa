@@ -1,1 +1,7 @@
 <h1>Homepage</h1>
+
+{% if current_user %}
+user's logged in! and the user's name is {{current_user.username}}
+{% else %}
+user's not logged in!
+{% endif %}
