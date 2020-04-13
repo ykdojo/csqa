@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
+    'main.apps.MainConfig',
     
     'django.contrib.sites', # for allauth
     'allauth',
