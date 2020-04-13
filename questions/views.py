@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from main.models import Question
 
 def questionView(request, id):
-    return render(request, 'question.html', {'id': id})
+    question = Question.objects.get(pk=id)
+    return render(request, 'question.html', {'question': question})
