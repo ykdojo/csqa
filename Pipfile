@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django = "==3.0.5"
+gunicorn = "==19.9.0"
 
 [dev-packages]
 pylint = "*"
