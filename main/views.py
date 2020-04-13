@@ -1,8 +1,15 @@
 from django.shortcuts import render
+from main.models import Question
 
 def homeFeedView(request):
     current_user = request.user
     if not current_user.is_authenticated:
         current_user = None
-    context = {'current_user': current_user}
+    
+    # TODO: Only retrieve recent questions.
+    questions = Question.objects.all()
+    context = {
+        'current_user': current_user,
+        'questions': questions
+    }
     return render(request, 'home.html', context)

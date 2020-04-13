@@ -5,3 +5,7 @@ user's logged in! and the user's name is {{current_user.username}}
 {% else %}
 user's not logged in!
 {% endif %}
+
+{% for question in questions %}
+    <p>{{ question.title }} <span>by {{ question.user.username }}</span></p>
+{% endfor %}
