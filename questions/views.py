@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def questionView(request, id):
+    return render(request, 'question.html', {'id': id})
