@@ -1,1 +1,1 @@
-web: gunicorn gsqa_project.wsgi --log-file -
+web: gunicorn csqa_project.wsgi --log-file -
