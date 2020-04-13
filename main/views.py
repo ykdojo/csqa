@@ -7,7 +7,7 @@ def homeFeedView(request):
         current_user = None
     
     # TODO: Only retrieve recent questions.
-    questions = Question.objects.all()
+    # questions = Question.objects.all().order_by('-date')
     context = {
         'current_user': current_user,
         'questions': questions
