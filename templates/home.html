@@ -7,5 +7,9 @@ user's not logged in!
 {% endif %}
 
 {% for question in questions %}
-    <p><a href="/question/{{question.id}}">{{ question.title }}</a><span> by {{ question.user.username }}</span></p>
+    <p>
+        <a href="/question/{{question.id}}">{{ question.title }}</a>
+        <span> by {{ question.user.username }}</span>
+        <span> - {{question.x_ago}}</span>
+    </p>
 {% endfor %}
