@@ -1,20 +1,17 @@
 {% extends "common.html" %}
 {% block content %}
-<h2>CSQA - An open source Q&A website for coders</h2>
 
 {% if current_user %}
-user's logged in! and the user's name is {{current_user.username}}
+<!-- user's logged in! and the user's name is {{current_user.username}} -->
 {% else %}
-user's not logged in!
+<!-- user's not logged in! -->
 {% endif %}
-
-<p><a href="/question/new"><buttton>New Question</buttton></a></p>
 
 {% for question in questions %}
     <p>
         <a href="/question/{{question.id}}">{{ question.title }}</a>
-        <span> by {{ question.user.username }}</span>
-        <span> - {{question.x_ago}}</span>
+        <!-- <span> by {{ question.user.username }}</span>
+        <span> - {{question.x_ago}}</span> -->
     </p>
 {% endfor %}
 {% endblock %}

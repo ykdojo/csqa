@@ -3,7 +3,19 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <title>{% block title %}CSQA - An open-source Q&A website for programmers{% endblock %}</title>
     </head>
-    <body>
-        {% block content %}{% endblock %}
+    <body class="bg-light">
+        <div class="container" style="max-width:700">
+            <div class="card shadow-sm" style="margin-top: 30px">
+                <div class="card-header">
+                    <h6 style="margin-bottom: 0; margin-top: 7; display: inline-block">
+                        <a href="/" class="text-dark">CSQA - An open-source Q&A website for coders</a>
+                    </h6>
+                    <a href="/question/new"><button type="button" class="btn btn-sm btn-outline-dark" style="float: right">New Question</button></a>
+                </div>
+                <div class="pb-3 pt-4 pr-4 pl-4">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </body>
 </html>
