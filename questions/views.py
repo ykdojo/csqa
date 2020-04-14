@@ -11,7 +11,7 @@ def newView(request):
 
     if request.method == 'POST':
         if not current_user.is_authenticated:
-            HttpResponseRedirect('/accounts/login')            
+            return HttpResponseRedirect('/accounts/login')            
         form = QuestionForm(request.POST)
         if form.is_valid():
             q = Question(

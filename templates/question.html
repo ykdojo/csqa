@@ -1,6 +1,13 @@
 {% extends "common.html" %}
 {% block content %}
 <h5>{{question.title}}</h5>
-<h6>{{question.body}}</h6>
-<!-- <h5>- {{question.x_ago}}</h5> -->
+<p>{{question.body}}</p>
+<hr style="margin-top: 2rem"/>
+<form action="/question/{{question.id}}/answer" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <textarea class="form-control" id="text" name="text" rows="3" placeholder="Type your answer here."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
 {% endblock %}
