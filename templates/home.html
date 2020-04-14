@@ -10,8 +10,8 @@
 {% for question in questions %}
     <p>
         <a href="/question/{{question.id}}">{{ question.title }}</a>
-        <span> by {{ question.user.username }}</span>
-        <span> - {{question.x_ago}}</span>
+        <!-- <span> by {{ question.user.username }}</span>
+        <span> - {{question.x_ago}}</span> -->
     </p>
 {% endfor %}
 {% endblock %}
