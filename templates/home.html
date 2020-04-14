@@ -1,3 +1,5 @@
+{% extends "common.html" %}
+{% block content %}
 <h2>CSQA - An open source Q&A website for coders</h2>
 
 {% if current_user %}
@@ -15,3 +17,4 @@ user's not logged in!
         <span> - {{question.x_ago}}</span>
     </p>
 {% endfor %}
+{% endblock %}
