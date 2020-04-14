@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 import datetime
 
 class Question(models.Model):
@@ -35,6 +36,10 @@ class Question(models.Model):
         return super(Question, self).save(*args, **kwargs)
     def __str__(self):
         return self.title
+
+class QuestionForm(forms.Form):
+    title = forms.CharField(label = 'Question', max_length=200)
+    body = forms.CharField(label = 'Details', max_length=5000, widget=forms.Textarea)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

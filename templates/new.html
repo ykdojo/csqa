@@ -1,4 +1,15 @@
 {% extends "common.html" %}
 {% block content %}
-New question creation page.
+    <form action="/question/new/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="title">Question</label>
+          <input class="form-control" id="title" name="title" placeholder="Enter your question here.">
+        </div>
+        <div class="form-group">    
+          <label for="title">Details</label>
+          <textarea class="form-control" id="body" name="body" rows="3"></textarea></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
 {% endblock %}
