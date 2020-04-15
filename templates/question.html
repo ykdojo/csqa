@@ -1,14 +1,18 @@
 {% extends "common.html" %}
 {% block content %}
 <h5>{{question.title}}</h5>
-<p>{{question.body}}</p>
+<div style="margin-bottom: 7px">{{question.body}}</div>
+<div class='text-secondary' style="font-size: 14px">Posted by {{ question.user }}<span style="margin-right: 6px; margin-left: 6px;">|</span></span>{{ question.x_ago }}</div>
 
 {% for answer in answers %}
-    <div><span>{{ answer.user }}</span><span></span></div>
-    <div style="margin-bottom: 20px">{{ answer.text }}</div>
+    <hr/>
+    <div class='answer-block'>
+      <div class='text-secondary' style="font-size: 14px">{{ answer.user }}<span style="margin-right: 6px; margin-left: 6px;">|</span></span>{{ answer.x_ago }}</div>
+      <div style="margin-bottom: 20px">{{ answer.text }}</div>
+    </div>
 {% endfor %}
 
-<hr style="margin-top: 2rem"/>
+<hr style="margin-top: 1.5rem"/>
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}
   <div class="form-group">
