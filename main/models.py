@@ -38,8 +38,8 @@ class Question(models.Model):
         return self.title
 
 class QuestionForm(forms.Form):
-    title = forms.CharField(label = 'Question', max_length=200)
-    body = forms.CharField(label = 'Details', max_length=5000, widget=forms.Textarea)
+    title = forms.CharField(max_length=200)
+    body = forms.CharField(max_length=5000, widget=forms.Textarea)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -47,3 +47,6 @@ class Answer(models.Model):
     text = models.TextField()
     def __str__(self):
         return self.text
+
+class AnswerForm(forms.Form):
+    text = forms.CharField(max_length=5000, widget=forms.Textarea)

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from main.views import homeFeedView
 from pages.views import aboutPageView
-from questions.views import questionView, newView
+from questions.views import questionView, newView, answerView
 
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('about/', aboutPageView),
     path('accounts/', include('allauth.urls')),
     path('question/<int:id>/', questionView),
+    path('question/<int:id>/answer', answerView),
     path('question/new/', newView),
 ]
