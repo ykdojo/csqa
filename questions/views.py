@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from main.models import Question, Answer, QuestionForm, AnswerForm
 
 def questionView(request, id):
@@ -13,7 +14,7 @@ def newView(request):
     current_user = request.user
 
     if not current_user.is_authenticated:
-        return HttpResponseRedirect('/accounts/login')
+        return HttpResponseRedirect(reverse('account_signup'))
 
     if request.method != 'POST':
         render(request, 'new.html', {'current_user': current_user})
