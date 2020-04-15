@@ -13,6 +13,7 @@
 {% endfor %}
 
 <hr style="margin-top: 1.5rem"/>
+{% if current_user.is_authenticated %}
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}
   <div class="form-group">
@@ -20,4 +21,7 @@
   </div>
   <button type="submit" class="btn btn-primary mb-2">Submit</button>
 </form>
+{% else %}
+<a href="/accounts/login">Log in to answer this question.</a>
+{% endif %}
 {% endblock %}

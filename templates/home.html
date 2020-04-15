@@ -1,7 +1,7 @@
 {% extends "common.html" %}
 {% block content %}
 
-{% if current_user %}
+{% if current_user.is_authenticated %}
 <!-- user's logged in! and the user's name is {{current_user.username}} -->
 {% else %}
 <!-- user's not logged in! -->
