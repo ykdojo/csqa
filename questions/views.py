@@ -4,14 +4,16 @@ from main.models import Question, Answer, QuestionForm, AnswerForm
 
 def questionView(request, id):
     question = Question.objects.get(pk=id)
-    return render(request, 'question.html', {'question': question})
+    answers = Answer.objects.filter(question_id=id)
+    context = {'question': question, 'answers': answers}
+    return render(request, 'question.html', context)
 
 def newView(request):
     current_user = request.user
 
     if request.method != 'POST':
         render(request, 'new.html')
-    
+
     if not current_user.is_authenticated:
         return HttpResponseRedirect('/accounts/login')            
     
