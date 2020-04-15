@@ -16,11 +16,11 @@ def newView(request):
         return HttpResponseRedirect('/accounts/login')
 
     if request.method != 'POST':
-        render(request, 'new.html')
+        render(request, 'new.html', {'current_user': current_user})
     
     form = QuestionForm(request.POST)
     if not form.is_valid():
-        return render(request, 'new.html')
+        return render(request, 'new.html', {'current_user': current_user})
     
     q = Question(
         user_id = current_user.id,

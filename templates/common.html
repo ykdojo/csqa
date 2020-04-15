@@ -11,14 +11,30 @@
             <div class="card shadow-sm" style="margin-top: 30px">
                 <div class="card-header">
                     <h6 style="margin-bottom: 0; margin-top: 7; display: inline-block">
-                        <a href="/" class="text-dark">CSQA - An open-source Q&A website for coders</a>
+                        <a href="/" class="text-dark">CSQA<span class="site-title-second-half"> - An open-source Q&A website for coders</span></a>
                     </h6>
-                    <a href="/question/new"><button type="button" class="btn btn-sm btn-outline-dark" style="float: right">New Question</button></a>
+                    <a href="/question/new"><button type="button" class="btn btn-sm btn-outline-dark" style="float: right">
+                        {% if current_user.is_authenticated %}
+                            New Question
+                        {% else %}
+                            Sign Up to Ask Question
+                        {% endif %}
+                    </button></a>
                 </div>
                 <div class="pb-3 pt-4 pr-4 pl-4">
                     {% block content %}{% endblock %}
                 </div>
             </div>
+        </div>
+        <div class="container text-right" style="max-width:700; padding-right:21; padding-top:2; font-size:14; color: #6c757d">
+                <a href="/" class="text-secondary">Home</a> | 
+            {% if current_user.is_authenticated %}
+                <a href="/accounts/logout" class="text-secondary">Log out</a> | 
+            {% else %}
+                <a href="/accounts/signup" class="text-secondary">Sign up / log in</a> | 
+            {% endif %}
+                <a href="https://github.com/ykdojo/csqa" class="text-secondary" target="_blank">Source code</a> | 
+            <a href="/about" class="text-secondary">About</a>
         </div>
     </body>
 </html>

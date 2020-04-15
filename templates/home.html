@@ -1,12 +1,6 @@
 {% extends "common.html" %}
 {% block content %}
 
-{% if current_user.is_authenticated %}
-<!-- user's logged in! and the user's name is {{current_user.username}} -->
-{% else %}
-<!-- user's not logged in! -->
-{% endif %}
-
 {% for question in questions %}
     <p>
         <a href="/question/{{question.id}}">{{ question.title }}</a>
