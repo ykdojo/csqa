@@ -4,7 +4,8 @@
 <p>{{question.body}}</p>
 
 {% for answer in answers %}
-    <p>{{ answer.text }} by {{ answer.user }}</p>
+    <div><span>{{ answer.user }}</span><span></span></div>
+    <div style="margin-bottom: 20px">{{ answer.text }}</div>
 {% endfor %}
 
 <hr style="margin-top: 2rem"/>
