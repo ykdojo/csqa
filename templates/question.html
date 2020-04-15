@@ -1,7 +1,7 @@
 {% extends "common.html" %}
 {% block content %}
 <h5>{{question.title}}</h5>
-<div style="margin-bottom: 7px">{{question.body}}</div>
+<div style="margin-bottom: 7px; font-size: 17px">{{question.body}}</div>
 <div class='text-secondary' style="font-size: 14px">Posted by {{ question.user }}<span style="margin-right: 6px; margin-left: 6px;">|</span></span>{{ question.x_ago }}</div>
 
 {% for answer in answers %}
