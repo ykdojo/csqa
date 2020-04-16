@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>my questions</p>
+{% for question in questions %}
+    <p>
+        <a href="/question/{{question.id}}">{{ question.title }}</a>
+    </p>
+{% endfor %}
+{% if not questions_exist %}
+    <p>You haven't asked any questions yet.</p>
+{% endif %}
 {% endblock %}

@@ -55,4 +55,8 @@ def myAnswersView(request):
 
 def myQuestionsView(request):
     current_user = request.user
-    return render(request, 'my_questions.html', {'current_user': current_user})
+    questions = Question.objects.filter(user_id = current_user.id)
+    questions_exist = len(questions) > 0
+    return render(request, 'my_questions.html',
+                  {'current_user': current_user, 'questions': questions,
+                   'questions_exist': questions_exist})
