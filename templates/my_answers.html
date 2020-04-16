@@ -2,4 +2,17 @@
 
 {% block content %}
 <p>The questions you've answered:</p>
+{% for answer in answers %}
+    <hr/>
+    <p style="margin-bottom: 1">
+        <a href="/question/{{answer.question.id}}">{{ answer.question.title }}</a>
+    </p>
+    <div class='answer-block'>
+      <div class='text-secondary' style="font-size: 14px">{{ answer.user }}<span style="margin-right: 6px; margin-left: 6px;">|</span></span>{{ answer.x_ago }}</div>
+      <div style="margin-bottom: 20px">{{ answer.text }}</div>
+    </div>
+{% endfor %}
+{% if not answers_exist %}
+<p>You haven't answered any questions yet.</p>
+{% endif %}
 {% endblock %}
