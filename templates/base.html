@@ -20,7 +20,7 @@
                     </h6>
                     <span style="float: right">
                         <span class="csqa-nav">
-                            {% if not current_user.is_authenticated %}
+                            {% if current_user.is_authenticated %}
                             <a href="/" class="text-dark">My Questions</a> |
                             <a href="/" class="text-dark">My Answers</a>
                             {% endif %}
