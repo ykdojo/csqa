@@ -20,7 +20,7 @@ def x_ago_helper(diff):
 class Question(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    body = models.TextField()
+    body = models.TextField(blank=True, null=True)
     created     = models.DateTimeField(editable=False)
     modified    = models.DateTimeField()
     
@@ -40,7 +40,7 @@ class Question(models.Model):
 
 class QuestionForm(forms.Form):
     title = forms.CharField(max_length=200)
-    body = forms.CharField(max_length=5000, widget=forms.Textarea)
+    body = forms.CharField(max_length=5000, widget=forms.Textarea, required=False)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
