@@ -48,3 +48,11 @@ def answerView(request, id):
     )
     a.save()
     return HttpResponseRedirect(f'/question/{id}')
+
+def myAnswersView(request):
+    current_user = request.user
+    return render(request, 'my_answers.html', {'current_user': current_user})
+
+def myQuestionsView(request):
+    current_user = request.user
+    return render(request, 'my_questions.html', {'current_user': current_user})
