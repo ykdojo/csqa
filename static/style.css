@@ -2,6 +2,13 @@
     margin-left: 10px;
 }
 
+.csqa-nav {
+    position: relative;
+    top: 1px;
+    font-size: 13;
+    margin-right: 5;
+}
+
 @media (max-width: 615px){
     .site-title-second-half{
         display: none;

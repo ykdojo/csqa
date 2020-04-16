@@ -12,15 +12,27 @@
             <div class="card shadow-sm" style="margin-top: 30px">
                 <div class="card-header">
                     <h6 style="margin-bottom: 0; margin-top: 7; display: inline-block">
-                        <a href="/" class="text-dark">CSQA<span class="site-title-second-half"> - An open-source Q&A website for coders</span></a>
+                        <a href="/" class="text-dark">CSQA
+                            {% if not current_user.is_authenticated %}
+                            <span class="site-title-second-half"> - An open-source Q&A website for coders</span>
+                            {% endif %}
+                        </a>
                     </h6>
-                    <a href="/question/new"><button type="button" class="btn btn-sm btn-outline-dark" style="float: right">
-                        {% if current_user.is_authenticated %}
-                            New Question
-                        {% else %}
-                            Sign Up to Ask Question
-                        {% endif %}
-                    </button></a>
+                    <span style="float: right">
+                        <span class="csqa-nav">
+                            {% if not current_user.is_authenticated %}
+                            <a href="/" class="text-dark">My Questions</a> |
+                            <a href="/" class="text-dark">My Answers</a>
+                            {% endif %}
+                        </span>
+                        <a href="/question/new" style="display: inline-block"><button type="button" class="btn btn-sm btn-outline-dark">
+                            {% if current_user.is_authenticated %}
+                                New Question
+                            {% else %}
+                                Sign Up to Ask Question
+                            {% endif %}
+                        </button></a>
+                    </span>
                 </div>
                 <div class="pb-3 pt-4 pr-4 pl-4">
                     {% block content %}{% endblock %}
