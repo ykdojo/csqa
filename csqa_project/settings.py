@@ -28,7 +28,7 @@ DEBUG = (sys.argv[1] == 'runserver')
 NOT_DEBUG = not DEBUG
 
 # if DEBUG:
-    ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 # else:
     # ALLOWED_HOSTS = ['www.csqa.io', 'csqa.io']
 
