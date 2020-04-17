@@ -64,4 +64,4 @@ Just run:
 
 ### 5. Want to contribute?
 
-Thank you! That would be great. Please feel free to any pull requests here.
+Thank you! That would be great. Please feel free to send any pull requests here.
