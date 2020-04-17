@@ -2,7 +2,13 @@
 {% block content %}
 <h5>{{question.title}}</h5>
 <div style="margin-bottom: 7px; font-size: 17px">{{question.body | urlize }}</div>
-<div class='text-secondary' style="font-size: 14px">Posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}</div>
+<div class='text-secondary' style="font-size: 14px">
+  posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
+  <!-- <span class="separator">|</span>
+  upvote
+  <span class="separator">|</span>
+  downvote -->
+</div>
 
 {% for answer in answers %}
     <hr/>
