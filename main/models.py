@@ -23,6 +23,7 @@ class Question(models.Model):
     body = models.TextField(blank=True, null=True)
     created     = models.DateTimeField(editable=False)
     modified    = models.DateTimeField()
+    answers_count = models.IntegerField(default=0)
 
     @property
     def num_answers(self):
