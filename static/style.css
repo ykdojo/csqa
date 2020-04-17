@@ -1,3 +1,11 @@
+.answers > hr:last-child {
+    display: none;
+}
+
+.answer-text {
+    white-space: break-spaces;
+}
+
 .answer-block {
     margin-left: 10px;
 }

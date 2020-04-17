@@ -8,6 +8,7 @@ django = "==3.0.5"
 gunicorn = "==19.9.0"
 django-allauth = "*"
 whitenoise = "*"
+"psycopg2" = "*"
 
 [dev-packages]
 pylint = "*"

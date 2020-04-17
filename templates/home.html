@@ -6,4 +6,7 @@
         <a href="/question/{{question.id}}">{{ question.title }}</a>
     </p>
 {% endfor %}
+{% if not questions_exist %}
+    <p>No questions here yet.</p>
+{% endif %}
 {% endblock %}

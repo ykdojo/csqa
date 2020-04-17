@@ -8,11 +8,11 @@
     <hr/>
     <div class='answer-block'>
       <div class='text-secondary' style="font-size: 14px">{{ answer.user }}<span style="margin-right: 6px; margin-left: 6px;">|</span></span>{{ answer.x_ago }}</div>
-      <div style="margin-bottom: 20px">{{ answer.text }}</div>
+      <div class="answer-text" style="margin-bottom: 20px">{{ answer.text }}</div>
     </div>
 {% endfor %}
 
-<hr style="margin-top: 1.5rem"/>
+<hr style="margin-bottom: 20"/>
 {% if current_user.is_authenticated %}
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}

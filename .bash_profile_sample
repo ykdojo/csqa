@@ -1,0 +1,7 @@
+# This is a sample file for .bash_profile or .bash_rc
+# on your own computer. Your .bash_profile or .bash_rc
+# is used to define environment variables, which are
+# retrieved through Python commands like os.environ['POSTGRES_DB'].
+export POSTGRES_DB='csqa'
+export POSTGRES_USER='ykdojo'
+export POSTGRES_PASSWORD='put the Postgres password here'
