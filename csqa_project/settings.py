@@ -27,10 +27,10 @@ SECRET_KEY = 'h*mp19r&mml*hc$jg*r2yro93swu!tk33g12&m)z%1gvyjdnm#'
 DEBUG = (sys.argv[1] == 'runserver')
 NOT_DEBUG = not DEBUG
 
-# if DEBUG:
-ALLOWED_HOSTS = ['*']
-# else:
-    # ALLOWED_HOSTS = ['www.csqa.io', 'csqa.io']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['www.csqa.io', 'csqa.io']
 
 
 # Application definition
