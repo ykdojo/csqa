@@ -2,14 +2,10 @@ from django.shortcuts import render
 from main.models import Question
 from django.core.paginator import Paginator
 
-from django.conf import settings
-
 def listing(request):
     return render(request, 'list.html', {'page_obj': page_obj})
 
 def homeFeedView(request):
-    print('DATABASES (yk1):')
-    print(settings.DATABASES)
     current_user = request.user
     
     questions = Question.objects.all().order_by('-created')
