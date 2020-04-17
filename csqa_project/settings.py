@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -83,14 +84,10 @@ WSGI_APPLICATION = 'csqa_project.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['POSTGRES_DB'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': os.environ.get('POSTGRES_HOST', default='localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', default='5432')
-    }
+    'default': dj_database_url.config(
+        conn_max_age=600, #ssl_require=True,
+        default=os.environ['DATABASE_URL']
+    )
 }
 
 

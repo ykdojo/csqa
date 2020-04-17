@@ -9,6 +9,7 @@ gunicorn = "==19.9.0"
 django-allauth = "*"
 whitenoise = "*"
 "psycopg2" = "*"
+dj-database-url = "*"
 
 [dev-packages]
 pylint = "*"
