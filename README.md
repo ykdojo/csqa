@@ -2,10 +2,46 @@
 
 ## 1. Install pipenv and go into the shell (make sure you have pip3 or pip first.)
 
+If you're not familiar with this step, I recommend checking out the [first few sample chapters](https://djangoforbeginners.com/initial-setup/) of [Django for Beginners](https://gumroad.com/a/173585523) (that's my referral link).
+
+If you're completely new to Django, I also recommend checking out [my previous video series on Django](https://www.youtube.com/watch?v=UyQn0BhVqNU&list=PLBZBJbE_rGRXBhJNdKbN7IUy-ctlOFxA1).
 ```
 pip3 install pipenv
 pipenv install
 pipenv shell
 ```
 
-## 2. Set up Postgres on your local environment.
+## Note, there are two options here.
+
+If you want to start running this server with sqlite3 right away, skip to Step 4.
+
+Step 2 - 3 are only for setting up Postgres and they are optional.
+
+## 2-A. Set up Postgres on your local environment.
+
+You can use a commandline interface or something like [Postgres.app](https://postgresapp.com/), which I use.
+
+Whatever you decide to use, you'll need to make sure Postgres is running on your local enviornment.
+
+Please let me know if you need help with this step at [@ykdojo on Twitter](https://twitter.com/ykdojo) or on [csqa.io](https://csqa.io/).
+
+## 2-B.
+
+Create a new Postgres database. I call it csqa, but you can call it anything you want. Make sure you have created a user and set a password on it, too.
+
+## 3. Add an environment variable for connecting to your Postgres database.
+
+For this one, check out .bash_profile_sample as an example.
+
+## 4. Migrate and run your server
+
+Just run:
+
+```
+./manage.py migrate # note: make sure you have run pipenv shell before this
+./manage.py runserver
+```
+
+## 5. Want to contribute?
+
+Thank you! That would be great. Please feel free to any pull requests here.
