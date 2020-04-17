@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h*mp19r&mml*hc$jg*r2yro93swu!tk33g12&m)z%1gvyjdnm#'
 
-DEBUG = (sys.argv[1] == 'runserver')
-NOT_DEBUG = not DEBUG
+HEROKU = ('ENV' in os.environ and os.environ['ENV'] == 'heroku')
+DEBUG = not HEROKU
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-if not DEBUG:
+if HEROKU:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
 
@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'csqa_project.wsgi.application'
 try:
     DATABASES = {
         'default': dj_database_url.config(
-            conn_max_age=600, ssl_require=NOT_DEBUG,
+            conn_max_age=600, ssl_require=HEROKU,
             default=os.environ['DATABASE_URL']
         )
     }
