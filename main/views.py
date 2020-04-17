@@ -4,7 +4,6 @@ from main.models import Question
 def homeFeedView(request):
     current_user = request.user
     
-    # TODO: Only retrieve recent questions.
     questions = Question.objects.all().order_by('-created')[:30]
     questions_exist = len(questions) > 0
     context = {
