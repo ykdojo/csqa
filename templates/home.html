@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% for question in questions %}
+{% for question in page_obj %}
     <p>
         <a href="/question/{{question.id}}">{{ question.title }} <span class="text-secondary num-answers">({{ question.num_answers }} comments)</span></a>
     </p>
 {% endfor %}
-{% if not questions_exist %}
-    <p>No questions here yet.</p>
-{% endif %}
+<div class="pagination" style="margin-bottom: 3; margin-top: 10">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+        {% endif %}
+
+        <span class="current text-secondary">
+            page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
