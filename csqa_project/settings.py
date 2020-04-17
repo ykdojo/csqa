@@ -30,7 +30,7 @@ NOT_DEBUG = not DEBUG
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['www.csqa.io', 'csqa.io']
+    ALLOWED_HOSTS = ['csqa-staging.herokuapp.com', 'www.csqa.io', 'csqa.io']
 
 
 # Application definition
