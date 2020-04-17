@@ -1,3 +1,7 @@
+.num-answers {
+    font-size: 15px;
+}
+
 .answers > hr:last-child {
     display: none;
 }

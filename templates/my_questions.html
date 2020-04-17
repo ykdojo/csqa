@@ -3,7 +3,7 @@
 {% block content %}
 {% for question in questions %}
     <p>
-        <a href="/question/{{question.id}}">{{ question.title }}</a>
+        <a href="/question/{{question.id}}">{{ question.title }} <span class="text-secondary num-answers">({{ question.num_answers }} comments)</span></a>
     </p>
 {% endfor %}
 {% if not questions_exist %}

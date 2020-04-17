@@ -23,8 +23,11 @@ class Question(models.Model):
     body = models.TextField(blank=True, null=True)
     created     = models.DateTimeField(editable=False)
     modified    = models.DateTimeField()
-    
+
     @property
+    def num_answers(self):
+        answers = Answer.objects.filter(question_id = self.id)
+        return len(answers)
     def x_ago(self):
         diff = datetime.datetime.now(datetime.timezone.utc) - self.created
         return x_ago_helper(diff)
