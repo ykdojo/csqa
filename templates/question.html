@@ -17,7 +17,7 @@
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}
   <div class="form-group">
-    <textarea class="form-control" id="text" name="text" rows="3" placeholder="Type your answer here." required></textarea>
+    <textarea class="form-control" id="text" name="text" rows="7" placeholder="Type your answer here." required></textarea>
   </div>
   <button type="submit" class="btn btn-primary mb-2">Submit</button>
 </form>
