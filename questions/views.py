@@ -6,7 +6,7 @@ from main.models import Question, Answer, QuestionForm, AnswerForm
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
-    answers = Answer.objects.filter(question_id=id).order_by('-created')
+    answers = Answer.objects.filter(question_id=id).order_by('created')
     context = {'question': question, 'answers': answers, 'current_user': current_user}
     return render(request, 'question.html', context)
 
