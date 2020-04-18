@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser
 from django import forms
 import datetime
 
@@ -18,7 +18,7 @@ def x_ago_helper(diff):
     return f'{diff.seconds // 3600} hours ago'
 
 class Question(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     body = models.TextField(blank=True, null=True)
     created     = models.DateTimeField(editable=False)
@@ -48,7 +48,7 @@ class QuestionForm(forms.Form):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     text = models.TextField()
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField()
