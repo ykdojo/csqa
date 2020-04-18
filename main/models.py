@@ -32,6 +32,11 @@ class Question(models.Model):
     def x_ago(self):
         diff = datetime.datetime.now(datetime.timezone.utc) - self.created
         return x_ago_helper(diff)
+
+    # def update_points(self):
+    #     upvotes = self.upvoted_users.distinct.count()
+    #     downvotes = self.upvoted_users.distinct.count()
+    #     downvotes -= self.upvoted_users.filter(is_superuser=True).count()*2
         
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''

@@ -4,10 +4,16 @@
 <div style="margin-bottom: 5px; font-size: 17px">{{question.body | urlize }}</div>
 <div class='text-secondary' style="font-size: 14px">
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
-  <!-- <span class="separator">|</span>
-  upvote
   <span class="separator">|</span>
-  downvote -->
+  <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
+    <input hidden name="type" value="up">
+    {% csrf_token %}<a href="#" class="text-secondary" onclick="upvote.submit()">upvote</a>
+  </form>
+  <span class="separator">|</span>
+  <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
+    <input hidden name="vote_type" value="down">
+    {% csrf_token %}<a href="#" class="text-secondary" onclick="upvote.submit()">downvote</a>
+  </form>
 </div>
 
 {% for answer in answers %}

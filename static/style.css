@@ -3,8 +3,8 @@
 }
 
 .separator {
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 3;
+    margin-right: 3;
 }
 
 .answers > hr:last-child {

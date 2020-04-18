@@ -3,6 +3,32 @@ from django.shortcuts import render
 from django.urls import reverse
 from main.models import Question, Answer, QuestionForm, AnswerForm
 
+# vote_type could be 'upvote', 'downvote', or 'cancel_vote'
+# def updateVote(user, question, vote_type):
+#     user.upvoted_questions.remove(question)
+#     user.downvoted_questions.remove(question)
+
+#     # if this is an upvote, add an upvote. otherwise, add a downvote.
+#     if vote_type == 'upvote':
+#         user.upvoted_questions.add(question)
+#     elif vote_type == 'downvote':
+#         user.downvoted_questions.add(question)
+
+#     question.update_points()
+
+def voteView(request, id):
+    current_user = request.user
+    question = Question.objects.get(pk=id)
+    if not current_user.is_authenticated:
+        return HttpResponseRedirect(reverse('account_signup'))
+    if current_user.id == question.user_id:
+        return HttpResponseRedirect(f'/question/{id}')
+    if request.method != 'POST':
+        return HttpResponseRedirect(f'/question/{id}')
+    vote_type = request.POST.get('vote_type')
+    return HttpResponseRedirect(f'/question/{id}')
+    # updateVote(current_user, question, vote_type)
+
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)

@@ -3,7 +3,7 @@ from django.urls import path, include
 from main.views import homeFeedView
 from pages.views import aboutPageView
 from questions.views import (questionView, newView, answerView,
-                            myQuestionsView, myAnswersView)
+                            myQuestionsView, myAnswersView, voteView)
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('about/', aboutPageView),
     path('accounts/', include('allauth.urls')),
     path('question/<int:id>/', questionView),
+    path('question/<int:id>/vote', voteView),
     path('question/<int:id>/answer', answerView),
     path('question/new/', newView),
     path('question/my_answers/', myAnswersView, name='my-answers'),
