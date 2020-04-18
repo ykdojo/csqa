@@ -4,16 +4,28 @@
 <div style="margin-bottom: 5px; font-size: 17px">{{question.body | urlize }}</div>
 <div class='text-secondary' style="font-size: 14px">
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
+  {% if not asked_by_user %}
+    <span class="separator">|</span>
+    <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
+      {% if upvoted %}
+        <input hidden name="vote_type" value="cancel_vote">
+      {% else %}
+        <input hidden name="vote_type" value="upvote">
+      {% endif %}
+      {% csrf_token %}<a href="#" class="{{ upvoted }} text-secondary" onclick="upvote.submit()">upvote</a>
+    </form>
+    <span class="separator">|</span>
+    <form name="downvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
+      {% if downvoted %}
+        <input hidden name="vote_type" value="cancel_vote">
+      {% else %}
+        <input hidden name="vote_type" value="downvote">
+      {% endif %}
+      {% csrf_token %}<a href="#" class="{{ downvoted }} text-secondary" onclick="downvote.submit()">downvote</a>
+    </form>
+  {% endif %}
   <span class="separator">|</span>
-  <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
-    <input hidden name="type" value="up">
-    {% csrf_token %}<a href="#" class="text-secondary" onclick="upvote.submit()">upvote</a>
-  </form>
-  <span class="separator">|</span>
-  <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
-    <input hidden name="vote_type" value="down">
-    {% csrf_token %}<a href="#" class="text-secondary" onclick="upvote.submit()">downvote</a>
-  </form>
+  <span>{{ question.points }} points</span>
 </div>
 
 {% for answer in answers %}

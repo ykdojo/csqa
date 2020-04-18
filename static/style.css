@@ -2,6 +2,10 @@
     font-size: 14px;
 }
 
+a.done, a.done:hover {
+    color: orange !important;
+}
+
 .separator {
     margin-left: 3;
     margin-right: 3;
