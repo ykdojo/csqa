@@ -8,7 +8,7 @@ def listing(request):
 def homeFeedView(request):
     current_user = request.user
     
-    questions = Question.objects.filter(points__gt=-2).order_by('-created')
+    questions = Question.objects.filter(points__gt=-3).order_by('-created')
     paginator = Paginator(questions, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
