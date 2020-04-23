@@ -65,3 +65,5 @@ Just run:
 ### 5. Want to contribute?
 
 Thank you! That would be great. Please feel free to send any pull requests here.
+
+If you have any questions or comments, please let me know on our Discord server here: https://discordapp.com/invite/YhpHpBa
