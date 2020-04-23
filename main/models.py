@@ -42,7 +42,7 @@ class Question(models.Model):
     def update_points(self):
         upvotes = self.upvoted_users.distinct().count()
         downvotes = self.downvoted_users.distinct().count()
-        downvotes += self.downvoted_users.filter(is_superuser=True).count()*2
+        downvotes += self.downvoted_users.filter(is_staff=True).count()*2
         self.points = upvotes - downvotes
         self.save()
         
