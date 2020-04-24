@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="app">
+    <div>[[ message ]]</div>
+    <div><button v-on:click="changeMessage" class="btn btn-primary">press this</button></div>
+</div>
+<script>
+var app = new Vue({
+    delimiters: ["[[", "]]"],
+    el: '#app',
+    data: {
+      message: 'Hello {{username}}!'
+    },
+    methods: {
+        changeMessage: function() {
+            this.message = 'Heeelloooo World'
+        }
+    }
+  });
+</script>
+{% endblock %}

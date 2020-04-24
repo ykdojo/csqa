@@ -20,3 +20,8 @@ def homeFeedView(request):
         'questions_exist': questions_exist
     }
     return render(request, 'home.html', context)
+
+def testView(request):
+    current_user = request.user
+    context = {'username': current_user.username}
+    return render(request, 'test.html', context)
