@@ -39,51 +39,53 @@
 
 </div>
 
+<!-- {{ question|json_script:"hello-data" }} -->
+
 <script>
-  var app = new Vue({
-    delimiters: ["[[", "]]"],
-    el: '#question',
-    data: {
-      downvoted: '{{downvoted}}',
-      upvoted: '{{upvoted}}',
-      points: {{question.points}}
-    },
-    methods: {
-      vote: function(voteType, voted, voteURL) {
-        var bodyFormData = new FormData();
-        if (voted == 'done') {
-          bodyFormData.set('vote_type', 'cancel_vote');
-        } else {
-          bodyFormData.set('vote_type', voteType);
-        }
-        axios({
-          method: 'post',
-          url: voteURL,
-          data: bodyFormData,
-          headers: {'Content-Type': 'multipart/form-data' }
-        }).then((response) => {
-          var voteType = response.data.vote_type;
-          if (voteType == 'upvote') {
-            this.upvoted = 'done';
-            this.downvoted = '';
-          } else if (voteType == 'downvote') {
-            this.upvoted = '';
-            this.downvoted = 'done';
-          } else {
-            this.upvoted = '';
-            this.downvoted = '';
-          }
-          this.points = response.data.points;
-        }).catch((error) => {
-          // 401: Not logged in (not authorized)
-          if(error.message.includes('401')) {
-            window.location.href = "/accounts/signup/";
-          }
-          // We should get here when the request is not
-          // POST or the user's trying to vote on their own question. (400)
-        });
+var app = new Vue({
+  delimiters: ["[[", "]]"],
+  el: '#question',
+  data: {
+    downvoted: '{{downvoted}}',
+    upvoted: '{{upvoted}}',
+    points: {{question.points}}
+  },
+  methods: {
+    vote: function(voteType, voted, voteURL) {
+      var bodyFormData = new FormData();
+      if (voted == 'done') {
+        bodyFormData.set('vote_type', 'cancel_vote');
+      } else {
+        bodyFormData.set('vote_type', voteType);
       }
+      axios({
+        method: 'post',
+        url: voteURL,
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+      }).then((response) => {
+        var voteType = response.data.vote_type;
+        if (voteType == 'upvote') {
+          this.upvoted = 'done';
+          this.downvoted = '';
+        } else if (voteType == 'downvote') {
+          this.upvoted = '';
+          this.downvoted = 'done';
+        } else {
+          this.upvoted = '';
+          this.downvoted = '';
+        }
+        this.points = response.data.points;
+      }).catch((error) => {
+        // 401: Not logged in (not authorized)
+        if(error.message.includes('401')) {
+          window.location.href = "/accounts/signup/";
+        }
+        // We should get here when the request is not
+        // POST or the user's trying to vote on their own question. (400)
+      });
     }
-  });  
+  }
+});  
 </script>
 {% endblock %}
