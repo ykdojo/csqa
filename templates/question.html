@@ -1,31 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+<div id="question">
+
 <h5>{{question.title}}</h5>
 <div style="margin-bottom: 5px; font-size: 17px; white-space: break-spaces">{{question.body | urlize }}</div>
 <div class='text-secondary' style="font-size: 14px">
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
   {% if not asked_by_user %}
-    <span class="separator">|</span>
-    <form name="upvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
-      {% if upvoted %}
-        <input hidden name="vote_type" value="cancel_vote">
-      {% else %}
-        <input hidden name="vote_type" value="upvote">
-      {% endif %}
-      {% csrf_token %}<a href="#" class="{{ upvoted }} text-secondary" onclick="upvote.submit()">upvote</a>
-    </form>
-    <span class="separator">|</span>
-    <form name="downvote" action="/question/{{question.id}}/vote" method="post" style="display: inline">
-      {% if downvoted %}
-        <input hidden name="vote_type" value="cancel_vote">
-      {% else %}
-        <input hidden name="vote_type" value="downvote">
-      {% endif %}
-      {% csrf_token %}<a href="#" class="{{ downvoted }} text-secondary" onclick="downvote.submit()">downvote</a>
-    </form>
+  <span class="separator">|</span>
+  <a href="#" v-on:click="vote('upvote', [[upvoted]], '/question/{{question.id}}/vote')" :class="[[upvoted]]" class="text-secondary">upvote</a>
+  <span class="separator">|</span>
+  <a href="#" v-on:click="vote('downvote', [[downvoted]], '/question/{{question.id}}/vote')" :class="[[downvoted]]" class="text-secondary">downvote</a>
   {% endif %}
   <span class="separator">|</span>
-  <span>{{ question.points }} points</span>
+  <span>[[points]] points</span>
 </div>
 
 {% for answer in answers %}
@@ -48,4 +36,54 @@
 {% else %}
 <p><a href="/accounts/login">Log in to answer this question</a></p>
 {% endif %}
+
+</div>
+
+<script>
+  var app = new Vue({
+    delimiters: ["[[", "]]"],
+    el: '#question',
+    data: {
+      downvoted: '{{downvoted}}',
+      upvoted: '{{upvoted}}',
+      points: {{question.points}}
+    },
+    methods: {
+      vote: function(voteType, voted, voteURL) {
+        var bodyFormData = new FormData();
+        if (voted == 'done') {
+          bodyFormData.set('vote_type', 'cancel_vote');
+        } else {
+          bodyFormData.set('vote_type', voteType);
+        }
+        axios({
+          method: 'post',
+          url: voteURL,
+          data: bodyFormData,
+          headers: {'Content-Type': 'multipart/form-data' }
+        }).then((response) => {
+          if (response.data.not_logged_in) {
+            window.location.href = "/accounts/signup/";
+          } else {
+            var voteType = response.data.vote_type;
+            if (voteType == 'upvote') {
+              this.upvoted = 'done';
+              this.downvoted = '';
+            } else if (voteType == 'downvote') {
+              this.upvoted = '';
+              this.downvoted = 'done';
+            } else {
+              this.upvoted = '';
+              this.downvoted = '';
+            }
+            this.points = response.data.points;
+          }
+        }).catch((error) => {
+          // We should get to here when the request is not
+          // POST or the user's trying to vote on their own question.
+        });
+      }
+    }
+  });  
+</script>
 {% endblock %}

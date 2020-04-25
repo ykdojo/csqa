@@ -2,7 +2,7 @@
     font-size: 14px;
 }
 
-a.done, a.done:hover {
+a.done, a.done:hover, a.done:visited {
     color: orange !important;
 }
 

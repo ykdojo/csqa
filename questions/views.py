@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from main.models import Question, Answer, QuestionForm, AnswerForm
@@ -15,19 +15,20 @@ def updateVote(user, question, vote_type):
         user.downvoted_questions.add(question)
 
     question.update_points()
+    return question.points
 
 def voteView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
     if not current_user.is_authenticated:
-        return HttpResponseRedirect(reverse('account_signup'))
+        return JsonResponse({'not_logged_in': True})
     if current_user.id == question.user_id:
-        return HttpResponseRedirect(f'/question/{id}')
+        return HttpResponseBadRequest('Same user')
     if request.method != 'POST':
-        return HttpResponseRedirect(f'/question/{id}')
+        return HttpResponseBadRequest('The request is not POST')
     vote_type = request.POST.get('vote_type')
-    updateVote(current_user, question, vote_type)
-    return HttpResponseRedirect(f'/question/{id}')
+    points = updateVote(current_user, question, vote_type)
+    return JsonResponse({'vote_type': vote_type, 'points': points})
 
 def questionView(request, id):
     current_user = request.user
