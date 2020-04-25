@@ -62,25 +62,25 @@
           data: bodyFormData,
           headers: {'Content-Type': 'multipart/form-data' }
         }).then((response) => {
-          if (response.data.not_logged_in) {
-            window.location.href = "/accounts/signup/";
+          var voteType = response.data.vote_type;
+          if (voteType == 'upvote') {
+            this.upvoted = 'done';
+            this.downvoted = '';
+          } else if (voteType == 'downvote') {
+            this.upvoted = '';
+            this.downvoted = 'done';
           } else {
-            var voteType = response.data.vote_type;
-            if (voteType == 'upvote') {
-              this.upvoted = 'done';
-              this.downvoted = '';
-            } else if (voteType == 'downvote') {
-              this.upvoted = '';
-              this.downvoted = 'done';
-            } else {
-              this.upvoted = '';
-              this.downvoted = '';
-            }
-            this.points = response.data.points;
+            this.upvoted = '';
+            this.downvoted = '';
           }
+          this.points = response.data.points;
         }).catch((error) => {
-          // We should get to here when the request is not
-          // POST or the user's trying to vote on their own question.
+          // 401: Not logged in (not authorized)
+          if(error.message.includes('401')) {
+            window.location.href = "/accounts/signup/";
+          }
+          // We should get here when the request is not
+          // POST or the user's trying to vote on their own question. (400)
         });
       }
     }

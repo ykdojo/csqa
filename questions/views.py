@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from main.models import Question, Answer, QuestionForm, AnswerForm
@@ -21,7 +21,7 @@ def voteView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
     if not current_user.is_authenticated:
-        return JsonResponse({'not_logged_in': True})
+        return HttpResponse('Not logged in', status=401)
     if current_user.id == question.user_id:
         return HttpResponseBadRequest('Same user')
     if request.method != 'POST':
