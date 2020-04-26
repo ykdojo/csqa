@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
-from main.models import Question, Answer, QuestionForm, AnswerForm
+from main.models import Question, Answer, QuestionForm, AnswerForm, QuestionSerializer
 
 # vote_type could be 'upvote', 'downvote', or 'cancel_vote'
 def updateVote(user, question, vote_type):
@@ -33,24 +33,26 @@ def voteView(request, id):
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
+    # question_data = QuestionSerializer(question).data
     answers = Answer.objects.filter(question_id=id).order_by('created')
-    upvoted = None
-    downvoted = None
+    upvoted = False
+    downvoted = False
     asked_by_user = False
 
     if not current_user.is_authenticated:
         pass
     elif current_user.upvoted_questions.filter(id=question.id).count() > 0:
-        upvoted = 'done'
+        upvoted = True
     elif current_user.downvoted_questions.filter(id=question.id).count() > 0:
-        downvoted = 'done'
+        downvoted = True
     elif current_user.id == question.user_id:
         asked_by_user = True
         
     context = {'question': question, 'answers': answers,
-               'current_user': current_user,
+               'current_user': current_user, 'points': question.points,
                'upvoted': upvoted, 'downvoted': downvoted,
-               'asked_by_user': asked_by_user}
+               'asked_by_user': asked_by_user,
+               'upvoted': upvoted, 'downvoted': downvoted}
     return render(request, 'question.html', context)
 
 def newView(request):

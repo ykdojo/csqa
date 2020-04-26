@@ -8,9 +8,9 @@
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
   {% if not asked_by_user %}
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('upvote', [[upvoted]], '/question/{{question.id}}/vote')" :class="[[upvoted]]" class="text-secondary">upvote</a>
+  <a href="#" v-on:click="vote('upvote', [[upvoted ? 'done' : '']], '/question/{{question.id}}/vote')" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('downvote', [[downvoted]], '/question/{{question.id}}/vote')" :class="[[downvoted]]" class="text-secondary">downvote</a>
+  <a href="#" v-on:click="vote('downvote', [[downvoted ? 'done' : '']], '/question/{{question.id}}/vote')" :class="[[downvoted ? 'done' : '']]" class="text-secondary">downvote</a>
   {% endif %}
   <span class="separator">|</span>
   <span>[[points]] points</span>
@@ -39,16 +39,22 @@
 
 </div>
 
-<!-- {{ question|json_script:"hello-data" }} -->
+{{ points|json_script:"points" }}
+{{ upvoted|json_script:"upvoted" }}
+{{ downvoted|json_script:"downvoted" }}
 
 <script>
+var points = JSON.parse(document.getElementById('points').textContent);
+var upvoted = JSON.parse(document.getElementById('upvoted').textContent);
+var downvoted = JSON.parse(document.getElementById('downvoted').textContent);
+
 var app = new Vue({
   delimiters: ["[[", "]]"],
   el: '#question',
   data: {
-    downvoted: '{{downvoted}}',
-    upvoted: '{{upvoted}}',
-    points: {{question.points}}
+    downvoted: downvoted,
+    upvoted: upvoted,
+    points: points,
   },
   methods: {
     vote: function(voteType, voted, voteURL) {
@@ -66,14 +72,14 @@ var app = new Vue({
       }).then((response) => {
         var voteType = response.data.vote_type;
         if (voteType == 'upvote') {
-          this.upvoted = 'done';
-          this.downvoted = '';
+          this.upvoted = true;
+          this.downvoted = false;
         } else if (voteType == 'downvote') {
-          this.upvoted = '';
-          this.downvoted = 'done';
+          this.upvoted = false;
+          this.downvoted = true;
         } else {
-          this.upvoted = '';
-          this.downvoted = '';
+          this.upvoted = false;
+          this.downvoted = false;
         }
         this.points = response.data.points;
       }).catch((error) => {

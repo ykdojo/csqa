@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django import forms
 from django.utils import timezone
+from rest_framework import serializers
 
 # Taking a time difference as inputs, it returns a string like:
 # '223 days ago'
@@ -83,3 +84,15 @@ class Answer(models.Model):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(max_length=5000, widget=forms.Textarea)
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ('user', 'title', 'body', 'created', 'answers_count', 'points')
+
+# class UserSerializer(serializers.ModelSerializer):
+#     learning_languages = LanguageSerializer(many=True)
+#     fluent_languages = LanguageSerializer(many=True)
+#     class Meta:
+#         model = CustomUser
+#         fields = ('username', 'learning_languages', 'fluent_languages')
