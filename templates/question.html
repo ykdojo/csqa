@@ -26,7 +26,7 @@
       <span>[[ answer.x_ago ]]</span>
       <span class="separator">|</span>
       <span v-if="answer.user != '{{current_user.username}}'">
-        <a href="#" v-on:click="" class="text-secondary">upvote</a>
+        <a href="#" v-on:click="vote('upvote', answer.upvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.upvoted ? 'done' : '']]">upvote</a>
         <span class="separator">|</span>
         <a href="#" v-on:click="" class="text-secondary">downvote</a>
         <span class="separator">|</span>

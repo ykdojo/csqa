@@ -19,6 +19,13 @@ def x_ago_helper(diff):
         return f'{diff.seconds // 60} minutes ago'
     return f'{diff.seconds // 3600} hours ago'
 
+def update_points_helper(obj):
+    upvotes = obj.upvoted_users.distinct().count()
+    downvotes = obj.downvoted_users.distinct().count()
+    downvotes += obj.downvoted_users.filter(is_staff=True).count()*2
+    obj.points = upvotes - downvotes
+    obj.save()
+
 class Question(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -42,11 +49,7 @@ class Question(models.Model):
             return self.points
 
     def update_points(self):
-        upvotes = self.upvoted_users.distinct().count()
-        downvotes = self.downvoted_users.distinct().count()
-        downvotes += self.downvoted_users.filter(is_staff=True).count()*2
-        self.points = upvotes - downvotes
-        self.save()
+        update_points_helper(self)
         
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
@@ -73,6 +76,9 @@ class Answer(models.Model):
     def x_ago(self):
         diff = timezone.now() - self.created
         return x_ago_helper(diff)
+    
+    def update_points(self):
+        update_points_helper(self)
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''

@@ -10,7 +10,8 @@ def updateVote(user, target, vote_type, question_or_answer):
         upvoted_targets = user.upvoted_questions
         downvoted_targets = user.downvoted_questions
     else:
-        pass
+        upvoted_targets = user.upvoted_answers
+        downvoted_targets = user.downvoted_answers
 
     upvoted_targets.remove(target)
     downvoted_targets.remove(target)
@@ -24,7 +25,8 @@ def updateVote(user, target, vote_type, question_or_answer):
     target.update_points()
     return target.points
 
-# def answerVoteView():
+def answerVoteView(request, id):
+    return voteView(request, id, 'answer')
 
 def questionVoteView(request, id):
     return voteView(request, id, 'question')
@@ -52,6 +54,16 @@ def questionView(request, id):
     # question_data = QuestionSerializer(question).data
     answers = Answer.objects.filter(question_id=id).order_by('created')
     answers_serialized = AnswerSerializer(answers, many=True).data
+    for answer in answers_serialized:
+        answer['upvoted'] = False
+        answer['downvoted'] = False
+        if not current_user.is_authenticated:
+            pass
+        elif current_user.upvoted_answers.filter(id=answer['id']).count() > 0:
+            answer['upvoted'] = True
+        elif current_user.downvoted_answers.filter(id=answer['id']).count() > 0:
+            answer['downvoted'] = True
+    
     upvoted = False
     downvoted = False
     asked_by_user = False
