@@ -25,7 +25,7 @@
         <span class="separator">|</span>
         <span>{{ answer.x_ago }}</span>
         <span class="separator">|</span>
-        <a href="#" v-on:click="" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
+        <a href="#" v-on:click="" class="text-secondary">upvote</a>
         <span class="separator">|</span>
         <a href="#" v-on:click="" class="text-secondary">downvote</a>
         <span class="separator">|</span>
@@ -52,11 +52,13 @@
 {{ points|json_script:"points" }}
 {{ upvoted|json_script:"upvoted" }}
 {{ downvoted|json_script:"downvoted" }}
+{{ answers_serialized|json_script:"answers_serialized" }}
 
 <script>
 var points = JSON.parse(document.getElementById('points').textContent);
 var upvoted = JSON.parse(document.getElementById('upvoted').textContent);
 var downvoted = JSON.parse(document.getElementById('downvoted').textContent);
+var answers = JSON.parse(document.getElementById('answers_serialized').textContent);
 
 var app = new Vue({
   delimiters: ["[[", "]]"],

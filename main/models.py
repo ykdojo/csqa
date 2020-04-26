@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.html import urlize
 from django import forms
 from django.utils import timezone
 from rest_framework import serializers
@@ -89,6 +90,25 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ('user', 'title', 'body', 'created', 'answers_count', 'points')
+
+class CreatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        diff = timezone.now() - value
+        return x_ago_helper(diff)
+
+class AnswerSerializer(serializers.ModelSerializer):
+    x_ago = serializers.SerializerMethodField()
+    text_html = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Answer
+        fields = ('text_html', 'x_ago')
+
+    def get_text_html(self, obj):
+        return urlize(obj.text)
+
+    def get_x_ago(self, obj):
+        return x_ago_helper(timezone.now() - obj.created)
 
 # class UserSerializer(serializers.ModelSerializer):
 #     learning_languages = LanguageSerializer(many=True)

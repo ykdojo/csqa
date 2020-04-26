@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
-from main.models import Question, Answer, QuestionForm, AnswerForm, QuestionSerializer
+from main.models import (Question, Answer, QuestionForm, AnswerForm,
+                        QuestionSerializer, AnswerSerializer)
 
 # vote_type could be 'upvote', 'downvote', or 'cancel_vote'
 def updateVote(user, question, vote_type):
@@ -35,6 +36,7 @@ def questionView(request, id):
     question = Question.objects.get(pk=id)
     # question_data = QuestionSerializer(question).data
     answers = Answer.objects.filter(question_id=id).order_by('created')
+    answers_serialized = AnswerSerializer(answers, many=True).data
     upvoted = False
     downvoted = False
     asked_by_user = False
@@ -52,7 +54,8 @@ def questionView(request, id):
                'current_user': current_user, 'points': question.points,
                'upvoted': upvoted, 'downvoted': downvoted,
                'asked_by_user': asked_by_user,
-               'upvoted': upvoted, 'downvoted': downvoted}
+               'upvoted': upvoted, 'downvoted': downvoted,
+               'answers_serialized': answers_serialized}
     return render(request, 'question.html', context)
 
 def newView(request):
