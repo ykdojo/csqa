@@ -115,10 +115,3 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     def get_x_ago(self, obj):
         return x_ago_helper(timezone.now() - obj.created)
-
-# class UserSerializer(serializers.ModelSerializer):
-#     learning_languages = LanguageSerializer(many=True)
-#     fluent_languages = LanguageSerializer(many=True)
-#     class Meta:
-#         model = CustomUser
-#         fields = ('username', 'learning_languages', 'fluent_languages')
