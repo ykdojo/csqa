@@ -67,6 +67,7 @@ class Answer(models.Model):
     text = models.TextField()
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField()
+    points = models.IntegerField(default=0)
 
     @property
     def x_ago(self):
