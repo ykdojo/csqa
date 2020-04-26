@@ -10,6 +10,7 @@ django-allauth = "*"
 whitenoise = "*"
 "psycopg2" = "*"
 dj-database-url = "*"
+djangorestframework = "*"
 
 [dev-packages]
 pylint = "*"
