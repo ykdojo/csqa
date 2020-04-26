@@ -18,6 +18,10 @@ def updateVote(user, question, vote_type):
     question.update_points()
     return question.points
 
+# def answerVoteView():
+
+# def questionVoteView():
+
 def voteView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)

@@ -25,10 +25,12 @@
       <span class="separator">|</span>
       <span>[[ answer.x_ago ]]</span>
       <span class="separator">|</span>
-      <a href="#" v-on:click="" class="text-secondary">upvote</a>
-      <span class="separator">|</span>
-      <a href="#" v-on:click="" class="text-secondary">downvote</a>
-      <span class="separator">|</span>
+      <span v-if="answer.user != '{{current_user.username}}'">
+        <a href="#" v-on:click="" class="text-secondary">upvote</a>
+        <span class="separator">|</span>
+        <a href="#" v-on:click="" class="text-secondary">downvote</a>
+        <span class="separator">|</span>
+      </span>
       <span>0 points</span>
     </div>
   </div>
