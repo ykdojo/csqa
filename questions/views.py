@@ -5,18 +5,24 @@ from main.models import (Question, Answer, QuestionForm, AnswerForm,
                         QuestionSerializer, AnswerSerializer)
 
 # vote_type could be 'upvote', 'downvote', or 'cancel_vote'
-def updateVote(user, question, vote_type):
-    user.upvoted_questions.remove(question)
-    user.downvoted_questions.remove(question)
+def updateVote(user, target, vote_type, question_or_answer):
+    if question_or_answer == 'question':
+        upvoted_targets = user.upvoted_questions
+        downvoted_targets = user.downvoted_questions
+    else:
+        pass
+
+    upvoted_targets.remove(target)
+    downvoted_targets.remove(target)
 
     # if this is an upvote, add an upvote. otherwise, add a downvote.
     if vote_type == 'upvote':
-        user.upvoted_questions.add(question)
+        upvoted_targets.add(target)
     elif vote_type == 'downvote':
-        user.downvoted_questions.add(question)
+        downvoted_targets.add(target)
 
-    question.update_points()
-    return question.points
+    target.update_points()
+    return target.points
 
 # def answerVoteView():
 
@@ -37,7 +43,7 @@ def voteView(request, id, question_or_answer):
     if request.method != 'POST':
         return HttpResponseBadRequest('The request is not POST')
     vote_type = request.POST.get('vote_type')
-    points = updateVote(current_user, target, vote_type)
+    points = updateVote(current_user, target, vote_type, question_or_answer)
     return JsonResponse({'vote_type': vote_type, 'points': points})
 
 def questionView(request, id):
