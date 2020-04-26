@@ -20,19 +20,24 @@ def updateVote(user, question, vote_type):
 
 # def answerVoteView():
 
-# def questionVoteView():
+def questionVoteView(request, id):
+    return voteView(request, id, 'question')
 
-def voteView(request, id):
+def voteView(request, id, question_or_answer):
     current_user = request.user
-    question = Question.objects.get(pk=id)
+    if question_or_answer == 'question':
+        target = Question.objects.get(pk=id)
+    else:
+        target = Answer.objects.get(pk=id)
+    
     if not current_user.is_authenticated:
         return HttpResponse('Not logged in', status=401)
-    if current_user.id == question.user_id:
+    if current_user.id == target.user_id:
         return HttpResponseBadRequest('Same user')
     if request.method != 'POST':
         return HttpResponseBadRequest('The request is not POST')
     vote_type = request.POST.get('vote_type')
-    points = updateVote(current_user, question, vote_type)
+    points = updateVote(current_user, target, vote_type)
     return JsonResponse({'vote_type': vote_type, 'points': points})
 
 def questionView(request, id):
