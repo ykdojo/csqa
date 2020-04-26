@@ -96,13 +96,18 @@ class CreatedField(serializers.RelatedField):
         diff = timezone.now() - value
         return x_ago_helper(diff)
 
+class UserField(serializers.Field):
+    def to_representation(self, value):
+        return value.username
+
 class AnswerSerializer(serializers.ModelSerializer):
+    user = UserField()
     x_ago = serializers.SerializerMethodField()
     text_html = serializers.SerializerMethodField()
 
     class Meta:
         model = Answer
-        fields = ('text_html', 'x_ago')
+        fields = ('text_html', 'x_ago', 'user', 'id')
 
     def get_text_html(self, obj):
         return urlize(obj.text)

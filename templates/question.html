@@ -16,23 +16,23 @@
   <span>[[points]] points</span>
 </div>
 
-{% for answer in answers %}
-    <hr class='answer-hr'/>
-    <div class='answer-block'>
-      <div class="answer-text">{{ answer.text | urlize }}</div>
-      <div class='text-secondary answer-sub'>
-        <span>{{ answer.user }}</span>
-        <span class="separator">|</span>
-        <span>{{ answer.x_ago }}</span>
-        <span class="separator">|</span>
-        <a href="#" v-on:click="" class="text-secondary">upvote</a>
-        <span class="separator">|</span>
-        <a href="#" v-on:click="" class="text-secondary">downvote</a>
-        <span class="separator">|</span>
-        <span>0 points</span>
-      </div>
+<div v-for="answer in answers" :key="answer.id">
+  <hr class='answer-hr'/>
+  <div class='answer-block'>
+    <div class="answer-text" v-html="answer.text_html"></div>
+    <div class='text-secondary answer-sub'>
+      <span>[[ answer.user ]]</span>
+      <span class="separator">|</span>
+      <span>[[ answer.x_ago ]]</span>
+      <span class="separator">|</span>
+      <a href="#" v-on:click="" class="text-secondary">upvote</a>
+      <span class="separator">|</span>
+      <a href="#" v-on:click="" class="text-secondary">downvote</a>
+      <span class="separator">|</span>
+      <span>0 points</span>
     </div>
-{% endfor %}
+  </div>
+</div>
 
 <hr class='answer-hr'/>
 {% if current_user.is_authenticated %}
