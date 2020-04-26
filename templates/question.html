@@ -8,9 +8,9 @@
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
   {% if not asked_by_user %}
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('upvote', [[upvoted ? 'done' : '']], '/question/{{question.id}}/vote')" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
+  <a href="#" v-on:click="vote('upvote', upvoted, '/question/{{question.id}}/vote')" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('downvote', [[downvoted ? 'done' : '']], '/question/{{question.id}}/vote')" :class="[[downvoted ? 'done' : '']]" class="text-secondary">downvote</a>
+  <a href="#" v-on:click="vote('downvote', downvoted, '/question/{{question.id}}/vote')" :class="[[downvoted ? 'done' : '']]" class="text-secondary">downvote</a>
   {% endif %}
   <span class="separator">|</span>
   <span>[[points]] points</span>
@@ -73,7 +73,7 @@ var app = new Vue({
   methods: {
     vote: function(voteType, voted, voteURL) {
       var bodyFormData = new FormData();
-      if (voted == 'done') {
+      if (voted) {
         bodyFormData.set('vote_type', 'cancel_vote');
       } else {
         bodyFormData.set('vote_type', voteType);
