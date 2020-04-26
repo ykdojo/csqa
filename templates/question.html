@@ -17,16 +17,24 @@
 </div>
 
 {% for answer in answers %}
-    <hr/>
+    <hr class='answer-hr'/>
     <div class='answer-block'>
-      <div class='text-secondary' style="font-size: 14px">
-        <span>{{ answer.user }}</span><span class="separator">|</span>{{ answer.x_ago }}
+      <div class="answer-text">{{ answer.text | urlize }}</div>
+      <div class='text-secondary answer-sub'>
+        <span>{{ answer.user }}</span>
+        <span class="separator">|</span>
+        <span>{{ answer.x_ago }}</span>
+        <span class="separator">|</span>
+        <a href="#" v-on:click="" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
+        <span class="separator">|</span>
+        <a href="#" v-on:click="" class="text-secondary">downvote</a>
+        <span class="separator">|</span>
+        <span>0 points</span>
       </div>
-      <div class="answer-text" style="margin-bottom: 20px">{{ answer.text | urlize }}</div>
     </div>
 {% endfor %}
 
-<hr style="margin-bottom: 20"/>
+<hr class='answer-hr'/>
 {% if current_user.is_authenticated %}
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}

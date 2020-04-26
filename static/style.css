@@ -1,3 +1,12 @@
+hr.answer-hr {
+    margin-top: 10px;
+}
+
+.answer-sub {
+    font-size: 14px;
+    margin-top: 3;
+}
+
 .num-answers {
     font-size: 14px;
 }
