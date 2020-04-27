@@ -1,3 +1,8 @@
+div.gsc-control-cse.gsc-control-cse-en {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
 .search * {
     box-sizing: content-box;
 }
