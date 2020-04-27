@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-right" style="max-width:700; padding-right:21; padding-top:2; font-size:14; color: #6c757d">
+        <div class="container text-right" style="max-width:700; padding-right:21; padding-top:2; font-size:14; color: #6c757d; margin-bottom: 7px;">
                 <a href="/" class="text-secondary">Home</a> | 
             {% if current_user.is_authenticated %}
                 <a href="/accounts/logout" class="text-secondary">Log out ({{current_user.username}}, {{current_user.points}} points)</a> | 
