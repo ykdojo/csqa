@@ -22,7 +22,7 @@ def x_ago_helper(diff):
 def update_points_helper(obj):
     upvotes = obj.upvoted_users.distinct().count()
     downvotes = obj.downvoted_users.distinct().count()
-    downvotes += obj.downvoted_users.filter(is_staff=True).count()*2
+    downvotes += obj.downvoted_users.filter(is_staff=True).count()
     obj.points = upvotes - downvotes
     obj.save()
 
