@@ -46,6 +46,8 @@ def voteView(request, id, question_or_answer):
         return HttpResponseBadRequest('The request is not POST')
     vote_type = request.POST.get('vote_type')
     points = updateVote(current_user, target, vote_type, question_or_answer)
+    if question_or_answer == 'answer':
+        target.user.update_points()
     return JsonResponse({'vote_type': vote_type, 'points': points})
 
 def questionView(request, id):

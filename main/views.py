@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from main.models import Question
+from users.models import User
 from django.core.paginator import Paginator
 
 def homeFeedView(request):
@@ -17,6 +18,13 @@ def homeFeedView(request):
         'questions_exist': questions_exist
     }
     return render(request, 'home.html', context)
+
+def leaderboardView(request):
+    current_user = request.user
+
+    leaders = User.objects.filter(points__gt=0).order_by('-points')
+    context = {'current_user': current_user, 'leaders': leaders}
+    return render(request, 'leaderboard.html', context)
 
 def testView(request):
     current_user = request.user
