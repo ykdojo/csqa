@@ -114,7 +114,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('text_html', 'x_ago', 'user', 'id')
+        fields = ('text_html', 'x_ago', 'user', 'id', 'points')
 
     def get_text_html(self, obj):
         return urlize(obj.text)

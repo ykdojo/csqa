@@ -16,25 +16,11 @@
   <span>[[points]] points</span>
 </div>
 
-<div v-for="answer in answers" :key="answer.id">
-  <hr class='answer-hr'/>
-  <div class='answer-block'>
-    <div class="answer-text" v-html="answer.text_html"></div>
-    <div class='text-secondary answer-sub'>
-      <span>[[ answer.user ]]</span>
-      <span class="separator">|</span>
-      <span>[[ answer.x_ago ]]</span>
-      <span class="separator">|</span>
-      <span v-if="answer.user != '{{current_user.username}}'">
-        <a href="#" v-on:click="vote('upvote', answer.upvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.upvoted ? 'done' : '']]">upvote</a>
-        <span class="separator">|</span>
-        <a href="#" v-on:click="" class="text-secondary">downvote</a>
-        <span class="separator">|</span>
-      </span>
-      <span>0 points</span>
-    </div>
-  </div>
-</div>
+<answer
+  v-for="answer in answers"
+  v-bind:key="answer.id"
+  v-bind:answer="answer"
+></answer>
 
 <hr class='answer-hr'/>
 {% if current_user.is_authenticated %}
@@ -62,6 +48,74 @@ var upvoted = JSON.parse(document.getElementById('upvoted').textContent);
 var downvoted = JSON.parse(document.getElementById('downvoted').textContent);
 var answers = JSON.parse(document.getElementById('answers_serialized').textContent);
 
+function vote(voteType, voted, voteURL) {
+  var bodyFormData = new FormData();
+  if (voted) {
+    bodyFormData.set('vote_type', 'cancel_vote');
+  } else {
+    bodyFormData.set('vote_type', voteType);
+  }
+  axios({
+    method: 'post',
+    url: voteURL,
+    data: bodyFormData,
+    headers: {'Content-Type': 'multipart/form-data' }
+  }).then((response) => {
+    var voteType = response.data.vote_type;
+    var targetObj;
+    if('answer' in this){
+      targetObj = this.answer;
+    } else {
+      targetObj = this;
+    }
+    if (voteType == 'upvote') {
+      targetObj.upvoted = true;
+      targetObj.downvoted = false;
+    } else if (voteType == 'downvote') {
+      targetObj.upvoted = false;
+      targetObj.downvoted = true;
+    } else {
+      targetObj.upvoted = false;
+      targetObj.downvoted = false;
+    }
+    targetObj.points = response.data.points;
+  }).catch((error) => {
+    // 401: Not logged in (not authorized)
+    if(error.message.includes('401')) {
+      window.location.href = "/accounts/signup/";
+    }
+    // We should get here when the request is not
+    // POST or the user's trying to vote on their own question. (400)
+  });
+}
+
+Vue.component('answer', {
+  delimiters: ["[[", "]]"],
+  props: ['answer'],
+  methods: {vote: vote},
+  template: `
+  <div>
+    <hr class='answer-hr'/>
+    <div class='answer-block'>
+      <div class="answer-text" v-html="answer.text_html"></div>
+      <div class='text-secondary answer-sub'>
+        <span>[[ answer.user ]]</span>
+        <span class="separator">|</span>
+        <span>[[ answer.x_ago ]]</span>
+        <span class="separator">|</span>
+        <span v-if="answer.user != '{{current_user.username}}'">
+          <a href="#" v-on:click="vote('upvote', answer.upvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.upvoted ? 'done' : '']]">upvote</a>
+          <span class="separator">|</span>
+          <a href="#" v-on:click="vote('downvote', answer.downvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.downvoted ? 'done' : '']]">downvote</a>
+          <span class="separator">|</span>
+        </span>
+        <span>[[answer.points]] points</span>
+      </div>
+    </div>
+  </div>
+  `
+})
+
 var app = new Vue({
   delimiters: ["[[", "]]"],
   el: '#question',
@@ -69,43 +123,9 @@ var app = new Vue({
     downvoted: downvoted,
     upvoted: upvoted,
     points: points,
+    answers: answers,
   },
-  methods: {
-    vote: function(voteType, voted, voteURL) {
-      var bodyFormData = new FormData();
-      if (voted) {
-        bodyFormData.set('vote_type', 'cancel_vote');
-      } else {
-        bodyFormData.set('vote_type', voteType);
-      }
-      axios({
-        method: 'post',
-        url: voteURL,
-        data: bodyFormData,
-        headers: {'Content-Type': 'multipart/form-data' }
-      }).then((response) => {
-        var voteType = response.data.vote_type;
-        if (voteType == 'upvote') {
-          this.upvoted = true;
-          this.downvoted = false;
-        } else if (voteType == 'downvote') {
-          this.upvoted = false;
-          this.downvoted = true;
-        } else {
-          this.upvoted = false;
-          this.downvoted = false;
-        }
-        this.points = response.data.points;
-      }).catch((error) => {
-        // 401: Not logged in (not authorized)
-        if(error.message.includes('401')) {
-          window.location.href = "/accounts/signup/";
-        }
-        // We should get here when the request is not
-        // POST or the user's trying to vote on their own question. (400)
-      });
-    }
-  }
-});  
+  methods: {vote: vote}
+});
 </script>
 {% endblock %}
