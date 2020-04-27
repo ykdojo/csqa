@@ -11,7 +11,7 @@ hr.answer-hr {
     font-size: 14px;
 }
 
-a.done, a.done:hover, a.done:visited {
+a.done, a.done:hover, a.done:visited, a.done:active{
     color: orange !important;
 }
 
