@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h5>Top helpers:</h5>
 <div style="margin-bottom: 15; margin-left: 10;">
 {% for leader in leaders %}
     <div class="text-dark">{{leader.username}} - {{leader.points}} points</div>

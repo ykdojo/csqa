@@ -43,12 +43,13 @@
         <div class="container text-right" style="max-width:700; padding-right:21; padding-top:2; font-size:14; color: #6c757d">
                 <a href="/" class="text-secondary">Home</a> | 
             {% if current_user.is_authenticated %}
-                <a href="/accounts/logout" class="text-secondary">Log out ({{current_user.username}})</a> | 
+                <a href="/accounts/logout" class="text-secondary">Log out ({{current_user.username}}, {{current_user.points}} points)</a> | 
             {% else %}
                 <a href="/accounts/signup" class="text-secondary">Sign up / log in</a> | 
             {% endif %}
                 <a href="https://github.com/ykdojo/csqa" class="text-secondary" target="_blank">Source code</a> | 
-            <a href="/about" class="text-secondary">About</a>
+            <a href="/about" class="text-secondary">About</a> |
+            <a href="/leaderboard" class="text-secondary">Leaderboard</a>
         </div>
     </body>
     <script>
