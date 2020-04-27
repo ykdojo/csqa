@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="answers">
-{% for answer in answers %}
+{% for answer in page_obj %}
     <p style="margin-bottom: 1">
         <a href="/question/{{answer.question.id}}">{{ answer.question.title }} <span class="text-secondary num-answers">({{ answer.question.num_answers }} comments)</span></a>
     </p>
@@ -15,5 +15,21 @@
 </div>
 {% if not answers_exist %}
 <p>You haven't answered any questions yet.</p>
+{% else %}
+<div class="pagination" style="margin-bottom: 3; margin-top: 3">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+      {% endif %}
+
+      <span class="current text-secondary">
+            page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+      {% endif %}
+  </span>
+</div>
 {% endif %}
 {% endblock %}

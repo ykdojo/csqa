@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from main.models import (Question, Answer, QuestionForm, AnswerForm,
                         QuestionSerializer, AnswerSerializer)
+from django.core.paginator import Paginator
 
 # vote_type could be 'upvote', 'downvote', or 'cancel_vote'
 def updateVote(user, target, vote_type, question_or_answer):
@@ -130,10 +131,13 @@ def myAnswersView(request):
     current_user = request.user
     answers = Answer.objects.filter(user_id = current_user.id).order_by('-created')
     answers_exist = len(answers) > 0
+    paginator = Paginator(answers, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, 'my_answers.html',
                     {'current_user': current_user,
                     'answers_exist': answers_exist,
-                    'answers': answers})
+                    'page_obj': page_obj})
 
 def myQuestionsView(request):
     current_user = request.user
