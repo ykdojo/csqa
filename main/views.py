@@ -2,9 +2,6 @@ from django.shortcuts import render
 from main.models import Question
 from django.core.paginator import Paginator
 
-def listing(request):
-    return render(request, 'list.html', {'page_obj': page_obj})
-
 def homeFeedView(request):
     current_user = request.user
     
