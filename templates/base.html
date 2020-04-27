@@ -24,18 +24,15 @@
                     </h6>
                     <span style="float: right">
                         <span class="csqa-nav">
+                            <a href="{% url 'search' %}" class="text-dark">Search</a> |
                             {% if current_user.is_authenticated %}
                             <a href="{% url 'my-questions' %}" class="text-dark">My Questions</a> |
-                            <a href="{% url 'my-answers' %}" class="text-dark">My Answers</a>
+                            <a href="{% url 'my-answers' %}" class="text-dark">My Answers</a> |
                             {% endif %}
-                        </span>
-                        <a href="/question/new" style="display: inline-block"><button type="button" class="btn btn-sm btn-outline-dark">
-                            {% if current_user.is_authenticated %}
+                            <a href="/question/new" class="text-dark" style="display: inline-block">
                                 New Question
-                            {% else %}
-                                Sign Up to Ask Question
-                            {% endif %}
-                        </button></a>
+                            </a>
+                        </span>
                     </span>
                 </div>
                 <div class="pb-2 pt-4 pr-4 pl-4">

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from main.views import homeFeedView, testView
-from pages.views import aboutPageView
+from pages.views import aboutPageView, searchView
 from questions.views import (questionView, newView, answerView,
                             myQuestionsView, myAnswersView, questionVoteView,
                             answerVoteView)
@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homeFeedView),
     path('test/', testView),
+    path('search/', searchView, name='search'),
     path('about/', aboutPageView),
     path('accounts/', include('allauth.urls')),
     path('question/<int:id>/', questionView),

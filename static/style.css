@@ -1,3 +1,7 @@
+.search * {
+    box-sizing: content-box;
+}
+
 hr.answer-hr {
     margin-top: 10px;
 }
@@ -34,7 +38,7 @@ a.done:link, a.done:hover, a.done:visited, a.done:active{
 
 .csqa-nav {
     position: relative;
-    top: 1px;
+    top: 7px;
     font-size: 13;
     margin-right: 5;
 }
