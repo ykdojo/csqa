@@ -8,9 +8,9 @@
   posted by {{ question.user }}</span><span class="separator">|</span>{{ question.x_ago }}
   {% if not asked_by_user %}
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('upvote', upvoted, '/question/{{question.id}}/vote')" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
+  <a href="javascript:void(0)" v-on:click="vote('upvote', upvoted, '/question/{{question.id}}/vote')" :class="[[upvoted ? 'done' : '']]" class="text-secondary">upvote</a>
   <span class="separator">|</span>
-  <a href="#" v-on:click="vote('downvote', downvoted, '/question/{{question.id}}/vote')" :class="[[downvoted ? 'done' : '']]" class="text-secondary">downvote</a>
+  <a href="javascript:void(0)" v-on:click="vote('downvote', downvoted, '/question/{{question.id}}/vote')" :class="[[downvoted ? 'done' : '']]" class="text-secondary">downvote</a>
   {% endif %}
   <span class="separator">|</span>
   <span>[[points]] points</span>
@@ -104,9 +104,9 @@ Vue.component('answer', {
         <span>[[ answer.x_ago ]]</span>
         <span class="separator">|</span>
         <span v-if="answer.user != '{{current_user.username}}'">
-          <a href="#" v-on:click="vote('upvote', answer.upvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.upvoted ? 'done' : '']]">upvote</a>
+          <a href="javascript:void(0)" v-on:click="vote('upvote', answer.upvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.upvoted ? 'done' : '']]">upvote</a>
           <span class="separator">|</span>
-          <a href="#" v-on:click="vote('downvote', answer.downvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.downvoted ? 'done' : '']]">downvote</a>
+          <a href="javascript:void(0)" v-on:click="vote('downvote', answer.downvoted, '/answer/' + [[answer.id]] + '/vote')" class="text-secondary" :class="[[answer.downvoted ? 'done' : '']]">downvote</a>
           <span class="separator">|</span>
         </span>
         <span>[[answer.points]] points</span>
