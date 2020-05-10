@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    {% if current_user.points > 0 %}
     <form action="/question/new/" method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -12,4 +13,9 @@
         </div>
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </form>
+    {% else %}
+    <p>You need to have at least 1 point to ask a question.</p>
+    <p>Currently, you have {{ current_user.points }} points.</p>
+    <p>Your points will increase when you answer <a href="/">someone else's question</a> and another user upvotes your answer.</p>
+    {% endif %}
 {% endblock %}
