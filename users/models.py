@@ -16,6 +16,6 @@ class User(AbstractUser):
     def update_points(self):
         answers = self.answer_set.filter(~Q(points = 0))
         points = map(lambda a: a.points, answers)
-        user_points = reduce(lambda x, y: x + y, points)
+        user_points = reduce(lambda x, y: x + y, points, 0)
         self.points = user_points
         self.save()
