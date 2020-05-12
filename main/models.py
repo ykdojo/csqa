@@ -34,6 +34,7 @@ class Question(models.Model):
     modified    = models.DateTimeField()
     answers_count = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
+    hidden = models.BooleanField(default=False)
 
     @property
     def num_answers(self):
