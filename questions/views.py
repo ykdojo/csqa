@@ -98,7 +98,7 @@ def newView(request):
         render(request, 'new.html', {'current_user': current_user})
     
     form = QuestionForm(request.POST)
-    if not form.is_valid() or current_user.points < 1:
+    if not form.is_valid() or current_user.points < 0:
         return render(request, 'new.html', {'current_user': current_user})
         
     q = Question(
