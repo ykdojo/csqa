@@ -12,6 +12,7 @@ class User(AbstractUser):
     upvoted_answers = models.ManyToManyField(Answer, related_name="upvoted_users")
     downvoted_answers = models.ManyToManyField(Answer, related_name="downvoted_users")
     points = models.IntegerField(default=0)
+    is_shadow_banned = models.BooleanField(default=False)
 
     def update_points(self):
         answers = self.answer_set.filter(~Q(points = 0))

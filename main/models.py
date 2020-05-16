@@ -20,8 +20,8 @@ def x_ago_helper(diff):
     return f'{diff.seconds // 3600} hours ago'
 
 def update_points_helper(obj):
-    upvotes = obj.upvoted_users.distinct().count()
-    downvotes = obj.downvoted_users.distinct().count()
+    upvotes = obj.upvoted_users.filter(is_shadow_banned=False).distinct().count()
+    downvotes = obj.downvoted_users.filter(is_shadow_banned=False).distinct().count()
     downvotes += obj.downvoted_users.filter(is_staff=True).count()
     obj.points = upvotes - downvotes
     obj.save()
