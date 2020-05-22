@@ -64,17 +64,17 @@ function vote(voteType, voted, voteURL) {
     data: bodyFormData,
     headers: {'Content-Type': 'multipart/form-data' }
   }).then((response) => {
-    var voteType = response.data.vote_type;
+    var responseVoteType = response.data.vote_type;
     var targetObj;
     if('answer' in this){
       targetObj = this.answer;
     } else {
       targetObj = this;
     }
-    if (voteType == 'upvote') {
+    if (responseVoteType == 'upvote') {
       targetObj.upvoted = true;
       targetObj.downvoted = false;
-    } else if (voteType == 'downvote') {
+    } else if (responseVoteType == 'downvote') {
       targetObj.upvoted = false;
       targetObj.downvoted = true;
     } else {
