@@ -54,7 +54,6 @@ def voteView(request, id, question_or_answer):
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
-    # question_data = QuestionSerializer(question).data
     answers = Answer.objects.filter(question_id=id, points__gt=-2).order_by('created')
     answers_serialized = AnswerSerializer(answers, many=True).data
     for answer in answers_serialized:

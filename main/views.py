@@ -28,5 +28,6 @@ def leaderboardView(request):
 
 def testView(request):
     current_user = request.user
-    context = {'username': current_user.username}
+    context = {'username': current_user.username,
+               'current_user': current_user}
     return render(request, 'test.html', context)
