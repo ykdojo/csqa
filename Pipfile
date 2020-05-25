@@ -11,6 +11,7 @@ whitenoise = "*"
 "psycopg2" = "*"
 dj-database-url = "*"
 djangorestframework = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pylint = "*"

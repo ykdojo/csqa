@@ -53,3 +53,14 @@ a.done:link, a.done:hover, a.done:visited, a.done:active{
         display: none;
     }
 }
+
+
+/* **** Navbar toggler icon *******/
+
+.line1, .line2, .line3 {
+    width: 23px;
+    height: 3px;
+    margin: 5px;
+}
+
+/* **** Navbar toggler icon *******/
