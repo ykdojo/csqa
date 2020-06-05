@@ -31,6 +31,14 @@ pipenv install
 pipenv shell
 ```
 
+### If you have trouble instaling psycopg2, you might want to try something like this:
+
+https://stackoverflow.com/questions/39767810/cant-install-psycopg2-package-through-pip-install-is-this-because-of-sierra
+
+```
+env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pipenv install psycopg2
+```
+
 ### Note, there are two options here.
 
 If you want to start running this server with sqlite3 right away, skip to Step 4.
