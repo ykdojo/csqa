@@ -35,6 +35,8 @@ pipenv shell
 
 https://stackoverflow.com/questions/39767810/cant-install-psycopg2-package-through-pip-install-is-this-because-of-sierra
 
+This command worked for me:
+
 ```
 env LDFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib" pipenv install psycopg2
 ```
