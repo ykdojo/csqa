@@ -4,6 +4,7 @@ from django.utils.html import urlize
 from django import forms
 from django.utils import timezone
 from rest_framework import serializers
+from django.utils.html import escape
 
 # Taking a time difference as inputs, it returns a string like:
 # '223 days ago'
@@ -118,7 +119,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = ('text_html', 'x_ago', 'user', 'id', 'points')
 
     def get_text_html(self, obj):
-        return urlize(obj.text)
+        return urlize(escape(obj.text))
 
     def get_x_ago(self, obj):
         return x_ago_helper(timezone.now() - obj.created)
