@@ -20,12 +20,29 @@
 </div>
 
 <answer
+  v-if="!allAnswersShown"
+  v-for="answer in visibleAnswers"
+  v-bind:key="answer.id"
+  v-bind:answer="answer"
+></answer>
+
+<answer
+  v-if="allAnswersShown"
   v-for="answer in answers"
   v-bind:key="answer.id"
   v-bind:answer="answer"
 ></answer>
 
 <hr class='answer-hr'/>
+<div
+  v-if="answersHidden"
+  style="text-align: right; font-size: 14px; margin-bottom: 5px">
+  <a v-on:click="toggleAllAnswersShown" href="javascript:void(0)">
+    <span v-if="!allAnswersShown">Show all comments</span>
+    <span v-if="allAnswersShown">Hide some comments</span>
+  </a>
+</div>
+
 {% if current_user.is_authenticated %}
 <form action="/question/{{question.id}}/answer" method="post">
   {% csrf_token %}
@@ -127,8 +144,26 @@ var app = new Vue({
     upvoted: upvoted,
     points: points,
     answers: answers,
+    allAnswersShown: false,
   },
-  methods: {vote: vote}
+  computed: {
+    // The answers that are initially visible on the UI:
+    visibleAnswers: function () {
+      return this.answers.filter(function (answer) {
+        return answer.points > -2;
+      });
+    },
+    // true if at least one answer was hidden.
+    answersHidden: function() {
+      return this.answers.length > this.visibleAnswers.length;
+    }
+  },
+  methods: {
+    vote: vote,
+    toggleAllAnswersShown: function() {
+      this.allAnswersShown = !this.allAnswersShown;
+    }
+  }
 });
 </script>
 {% endblock %}
