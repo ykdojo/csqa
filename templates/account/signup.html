@@ -7,11 +7,37 @@
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  <div class='field'>
+    {{form.email.errors}}
+    {{form.email}}
+  </div>
+  <div class='field'>
+    {{form.username.errors}}
+    {{form.username}}
+  </div>
+  <div class='field'>
+    {{form.password1.errors}}
+    {{form.password1}}
+  </div>
+  <div class='field'>
+    {{form.password2.errors}}
+    {{form.password2}}
+  </div>
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
+<style>
+  .field{
+    display:flex !important;
+    margin-bottom:3% !important;
+  }
+  li{list-style:none}
+  
+  .errorlist{
+    color:red !important
+  }
+</style>
 
 {% endblock %}
