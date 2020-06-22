@@ -150,7 +150,7 @@ var app = new Vue({
     // The answers that are initially visible on the UI:
     visibleAnswers: function () {
       return this.answers.filter(function (answer) {
-        return answer.points > -2;
+        return answer.points > -2 && !answer.hidden;
       });
     },
     // true if at least one answer was hidden.
