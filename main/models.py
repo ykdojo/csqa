@@ -73,6 +73,7 @@ class Answer(models.Model):
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField()
     points = models.IntegerField(default=0)
+    hidden = models.BooleanField(default=False)
 
     @property
     def x_ago(self):
