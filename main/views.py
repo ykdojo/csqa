@@ -22,7 +22,7 @@ def homeFeedView(request):
 def leaderboardView(request):
     current_user = request.user
 
-    leaders = User.objects.filter(points__gt=0, is_superuser=False).order_by('-points')[:25]
+    leaders = User.objects.filter(points__gt=0).order_by('-points')[:25]
     context = {'current_user': current_user, 'leaders': leaders}
     return render(request, 'leaderboard.html', context)
 
