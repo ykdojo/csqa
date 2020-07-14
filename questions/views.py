@@ -55,7 +55,7 @@ def voteView(request, id, question_or_answer):
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
-    markdown_formatted_body = markdown.markdown(question.body, extensions=['fenced_code', 'markdown.extensions.fenced_code', 'codehilite', 'markdown.extensions.codehilite'])
+    markdown_formatted_body = markdown.markdown(question.body, extensions=['fenced_code', 'codehilite'])
     answers = Answer.objects.filter(question_id=id).order_by('created')
     answers_serialized = AnswerSerializer(answers, many=True).data
     for answer in answers_serialized:
