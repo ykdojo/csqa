@@ -1,5 +1,4 @@
 import markdown
-from markdown.extensions import fenced_code
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
