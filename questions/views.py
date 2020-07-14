@@ -1,3 +1,5 @@
+import markdown
+from markdown.extensions import fenced_code
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -54,6 +56,7 @@ def voteView(request, id, question_or_answer):
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
+    markdown_formatted_body = markdown.markdown(question.body, extensions=['fenced_code', 'markdown.extensions.fenced_code', 'codehilite', 'markdown.extensions.codehilite'])
     answers = Answer.objects.filter(question_id=id).order_by('created')
     answers_serialized = AnswerSerializer(answers, many=True).data
     for answer in answers_serialized:
@@ -85,7 +88,9 @@ def questionView(request, id):
                'upvoted': upvoted, 'downvoted': downvoted,
                'asked_by_user': asked_by_user,
                'upvoted': upvoted, 'downvoted': downvoted,
-               'answers_serialized': answers_serialized}
+               'answers_serialized': answers_serialized,
+               'markdown_formatted_body': markdown_formatted_body
+               }
     return render(request, 'question.html', context)
 
 def newView(request):
@@ -96,7 +101,7 @@ def newView(request):
 
     if request.method != 'POST':
         render(request, 'new.html', {'current_user': current_user})
-    
+    body = request.POST.get('body')
     form = QuestionForm(request.POST)
     if not form.is_valid() or current_user.points < 0:
         return render(request, 'new.html', {'current_user': current_user})
