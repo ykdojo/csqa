@@ -1,4 +1,5 @@
 import markdown
+from html import unescape
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -61,6 +62,7 @@ def questionView(request, id):
     for answer in answers_serialized:
         answer['upvoted'] = False
         answer['downvoted'] = False
+        answer['text_html'] = unescape(answer['text_html'])
         if not current_user.is_authenticated:
             pass
         elif current_user.upvoted_answers.filter(id=answer['id']).count() > 0:
@@ -123,10 +125,11 @@ def answerView(request, id):
     form = AnswerForm(request.POST)
     if not form.is_valid():
         return HttpResponseRedirect(f'/question/{id}')
+    markdown_formatted_text = markdown.markdown(form.cleaned_data['text'], extensions=['fenced_code', 'codehilite'])
     a = Answer(
         user_id = current_user.id,
         question_id = id,
-        text = form.cleaned_data['text']
+        text = markdown_formatted_text
     )
     a.save()
     return HttpResponseRedirect(f'/question/{id}')
