@@ -1,3 +1,5 @@
+import markdown
+from html import unescape
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -54,11 +56,13 @@ def voteView(request, id, question_or_answer):
 def questionView(request, id):
     current_user = request.user
     question = Question.objects.get(pk=id)
+    markdown_formatted_body = markdown.markdown(question.body, extensions=['fenced_code', 'codehilite'])
     answers = Answer.objects.filter(question_id=id).order_by('created')
     answers_serialized = AnswerSerializer(answers, many=True).data
     for answer in answers_serialized:
         answer['upvoted'] = False
         answer['downvoted'] = False
+        answer['text_html'] = unescape(answer['text_html'])
         if not current_user.is_authenticated:
             pass
         elif current_user.upvoted_answers.filter(id=answer['id']).count() > 0:
@@ -85,7 +89,9 @@ def questionView(request, id):
                'upvoted': upvoted, 'downvoted': downvoted,
                'asked_by_user': asked_by_user,
                'upvoted': upvoted, 'downvoted': downvoted,
-               'answers_serialized': answers_serialized}
+               'answers_serialized': answers_serialized,
+               'markdown_formatted_body': markdown_formatted_body
+               }
     return render(request, 'question.html', context)
 
 def newView(request):
@@ -96,7 +102,7 @@ def newView(request):
 
     if request.method != 'POST':
         render(request, 'new.html', {'current_user': current_user})
-    
+    body = request.POST.get('body')
     form = QuestionForm(request.POST)
     if not form.is_valid() or current_user.points < 0:
         return render(request, 'new.html', {'current_user': current_user})
@@ -119,10 +125,11 @@ def answerView(request, id):
     form = AnswerForm(request.POST)
     if not form.is_valid():
         return HttpResponseRedirect(f'/question/{id}')
+    markdown_formatted_text = markdown.markdown(form.cleaned_data['text'], extensions=['fenced_code', 'codehilite'])
     a = Answer(
         user_id = current_user.id,
         question_id = id,
-        text = form.cleaned_data['text']
+        text = markdown_formatted_text
     )
     a.save()
     return HttpResponseRedirect(f'/question/{id}')
