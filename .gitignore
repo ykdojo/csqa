@@ -1,1 +1,7 @@
 db.sqlite3
+.vscode/
+venv
+
+# Python cache
+*.py[oc]
+__pycache__/
